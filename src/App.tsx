@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import LandingPage from './components/LandingPage';
-import { QuizState } from './types';
+import QuestionBox from './components/QuestionBox';
+import { questions } from './data/questions';
+import { QuestionData } from './data/types';
+
+interface QuizState {
+  isStarted: boolean;
+  currentQuestionIndex: number;
+  score: number;
+  totalQuestions: number;
+}
 
 function App() {
   const [quizState, setQuizState] = useState<QuizState>({
     isStarted: false,
-    currentQuestion: 0,
+    currentQuestionIndex: 0,
     score: 0,
-    totalQuestions: 0,
+    totalQuestions: questions.length,
   });
 
   const handleStartQuiz = () => {
@@ -17,20 +26,54 @@ function App() {
     }));
   };
 
+  const handleAnswer = (selectedAnswer: number, isCorrect: boolean) => {
+    setQuizState(prev => ({
+      ...prev,
+      score: isCorrect ? prev.score + 1 : prev.score,
+    }));
+  };
+
+  const handleNextQuestion = () => {
+    const nextQuestionIndex = quizState.currentQuestionIndex + 1;
+    
+    // on quiz completion
+    if (nextQuestionIndex >= questions.length) {
+      // Quiz completed - show results
+      console.log('Quiz completed!');
+      console.log(`Final Score: ${quizState.score}/${questions.length}`);
+      return;
+    }
+
+    setQuizState(prev => ({
+      ...prev,
+      currentQuestionIndex: nextQuestionIndex,
+    }));
+  };
+
+  const getCurrentQuestion = (): QuestionData => {
+    return questions[quizState.currentQuestionIndex];
+  };
+
   return (
     <div className="App">
       {!quizState.isStarted ? (
         <LandingPage onStartQuiz={handleStartQuiz} />
       ) : (
-        <div className="min-h-screen bg-background flex items-center justify-center">
-          <div className="text-center text-white">
-            <h1 className="text-2xl font-playwright mb-4">Quiz Coming Soon!</h1>
-            <p className="font-quicksand">The quiz functionality will be implemented next.</p>
-          </div>
-        </div>
+        <QuestionBox
+          key={quizState.currentQuestionIndex} // Force remount on question change
+          questionNumber={quizState.currentQuestionIndex + 1}
+          totalQuestions={quizState.totalQuestions}
+          question={getCurrentQuestion().question}
+          options={getCurrentQuestion().options}
+          correctAnswer={getCurrentQuestion().correctAnswer}
+          explanation={getCurrentQuestion().explanation}
+          onAnswer={handleAnswer}
+          onNext={handleNextQuestion}
+        />
       )}
     </div>
   );
 }
 
 export default App;
+ 
