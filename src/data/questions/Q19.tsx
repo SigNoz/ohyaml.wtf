@@ -4,41 +4,31 @@ import { QuestionData } from '../types';
 export const Q19: QuestionData = {
   id: 19,
   questionNumber: 19,
-  question: (
+    question: (
     <div className="space-y-4">
-      <p>Let's make it more interesting. Below is a YAML configuration for a geoblocking feature.</p>
+      <p>Here's a trickier one. Think twice!</p>
       <div className="bg-[#343232] rounded-lg p-4">
         <code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">
-          {`geoblock_regions:
-            
-            - us #united states
-            - fr #france
-            - no #norway
-            - sf #san francisco
-            - in #india
-            - uk #united kingdom`}
+{`metadata:
+  name: {{ required "Name is required!" .Values.name }}`}
         </code>
       </div>
-      <p>What will happen when this configuration is applied?</p>
+      
+      <p>What happens when Helm renders this template, if .Values.name is not provided?</p>
     </div>
   ),
   options: [
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
+    <span>The name field is omitted</span>,
+    <span>Renders name: Name is required!</span>,
+    <span>Renders name: null</span>,
+    <span>Template rendering fails with error: "Name is required!"</span>,
   ],
-  correctAnswer: 1, // Option B is correct
+      correctAnswer: 1, // Option A is correct
   explanation: (
-    <div className="space-y-2">
+    <div className="space-y-2 text-[14px]">
       <p>
-        This YAML defines a <code className="text-orange-400">geoblock_regions</code> array 
-        containing country codes and city codes. Each item represents a region that will be 
-        blocked from accessing the service.
-      </p>
-      <p>
-        The <code className="text-orange-400">-</code> symbols indicate array items, 
-        making this a valid array structure for geoblocking configuration.
+        The <span className="text-orange-400 font-bold">required function stops rendering and throws the 
+        given error </span> if the value is missing or empty. It does not insert the message as a value or produce YAML.
       </p>
     </div>
   ),

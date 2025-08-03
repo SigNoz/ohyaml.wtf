@@ -19,10 +19,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartQuiz }) => {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="mb-16 "
           >
-            <h1 className="text-6xl lg:text-[70px] xl:text-[100px] font-playwright font-bold">
+            <div className="text-[40px] lg:text-[70px] xl:text-[100px] font-playwright font-bold px-2 sm:px-4">
               <span className="text-accent">oh</span>
               <span className="text-white">yaml.wtf</span>
-            </h1>
+            </div>
           </motion.div>
 
           {/* Tagline */}

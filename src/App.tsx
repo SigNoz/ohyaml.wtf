@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import LandingPage from './components/LandingPage';
 import QuestionBox from './components/QuestionBox';
+import ScorePage from './components/ScorePage';
 import { questions } from './data/questions';
 import { QuestionData } from './data/types';
 
@@ -9,6 +10,7 @@ interface QuizState {
   currentQuestionIndex: number;
   score: number;
   totalQuestions: number;
+  isFinished: boolean;
 }
 
 function App() {
@@ -17,6 +19,7 @@ function App() {
     currentQuestionIndex: 0,
     score: 0,
     totalQuestions: questions.length,
+    isFinished: false,
   });
 
   const handleStartQuiz = () => {
@@ -39,8 +42,10 @@ function App() {
     // on quiz completion
     if (nextQuestionIndex >= questions.length) {
       // Quiz completed - show results
-      console.log('Quiz completed!');
-      console.log(`Final Score: ${quizState.score}/${questions.length}`);
+      setQuizState(prev => ({
+        ...prev,
+        isFinished: true,
+      }));
       return;
     }
 
@@ -48,6 +53,16 @@ function App() {
       ...prev,
       currentQuestionIndex: nextQuestionIndex,
     }));
+  };
+
+  const handleRestart = () => {
+    setQuizState({
+      isStarted: false,
+      currentQuestionIndex: 0,
+      score: 0,
+      totalQuestions: questions.length,
+      isFinished: false,
+    });
   };
 
   const getCurrentQuestion = (): QuestionData => {
@@ -58,6 +73,12 @@ function App() {
     <div className="App">
       {!quizState.isStarted ? (
         <LandingPage onStartQuiz={handleStartQuiz} />
+      ) : quizState.isFinished ? (
+        <ScorePage
+          score={quizState.score}
+          totalQuestions={quizState.totalQuestions}
+          onRestart={handleRestart}
+        />
       ) : (
         <QuestionBox
           key={quizState.currentQuestionIndex} // Force remount on question change

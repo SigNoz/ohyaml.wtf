@@ -4,41 +4,53 @@ import { QuestionData } from '../types';
 export const Q14: QuestionData = {
   id: 14,
   questionNumber: 14,
-  question: (
+    question: (
     <div className="space-y-4">
-      <p>Let's make it more interesting. Below is a YAML configuration for a geoblocking feature.</p>
       <div className="bg-[#343232] rounded-lg p-4">
         <code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">
-          {`geoblock_regions:
-            
-            - us #united states
-            - fr #france
-            - no #norway
-            - sf #san francisco
-            - in #india
-            - uk #united kingdom`}
+{`message: >
+  Hello
+  World`}
         </code>
       </div>
-      <p>What will happen when this configuration is applied?</p>
+      <p>What is the actual value of message after parsing?</p>
     </div>
   ),
   options: [
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
+    <span>
+    <div className="bg-[#343232] rounded-lg p-4">
+    <code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">
+        {`message: "Hello World\\n"`}
+        </code>
+    </div>
+    </span>,
+    <span>
+    <div className="bg-[#343232] rounded-lg p-4">
+    <code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">
+        {`message: "Hello\\nWorld"`}
+        </code>
+    </div>
+    </span>,
+    <span>
+    <div className="bg-[#343232] rounded-lg p-4">
+    <code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">
+        {`message: "Hello World"`}
+        </code>
+    </div>
+    </span>,
+    <span>
+    <div className="bg-[#343232] rounded-lg p-4">
+    <code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">
+        {`message: "Hello\\nWorld\\n"`}
+        </code>
+    </div>
+    </span>,
   ],
-  correctAnswer: 1, // Option B is correct
+      correctAnswer: 0, // Option A is correct
   explanation: (
-    <div className="space-y-2">
+    <div className="space-y-2 text-[14px]">
       <p>
-        This YAML defines a <code className="text-orange-400">geoblock_regions</code> array 
-        containing country codes and city codes. Each item represents a region that will be 
-        blocked from accessing the service.
-      </p>
-      <p>
-        The <code className="text-orange-400">-</code> symbols indicate array items, 
-        making this a valid array structure for geoblocking configuration.
+        The folded style <span className="text-orange-400 font-bold">{`>`}</span> joins consecutive lines into a single line separated by spaces and appends a single trailing newline. Thus, <span className="text-orange-400 font-bold">"Hello World\n"</span> is the correct value. 
       </p>
     </div>
   ),

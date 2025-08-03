@@ -4,41 +4,53 @@ import { QuestionData } from '../types';
 export const Q12: QuestionData = {
   id: 12,
   questionNumber: 12,
-  question: (
+    question: (
     <div className="space-y-4">
-      <p>Let's make it more interesting. Below is a YAML configuration for a geoblocking feature.</p>
       <div className="bg-[#343232] rounded-lg p-4">
         <code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">
-          {`geoblock_regions:
-            
-            - us #united states
-            - fr #france
-            - no #norway
-            - sf #san francisco
-            - in #india
-            - uk #united kingdom`}
+{`key:`}
         </code>
       </div>
-      <p>What will happen when this configuration is applied?</p>
+      <p>What does this key map to?</p>
     </div>
   ),
   options: [
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
+    <span>
+    <div className="bg-[#343232] rounded-lg p-4">
+    <code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">
+        {`key: null`}
+        </code>
+    </div>
+    </span>,
+    <span>
+    <div className="bg-[#343232] rounded-lg p-4">
+    <code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">
+        {`key: ""`}
+        </code>
+    </div>
+    </span>,
+    <span>
+    <div className="bg-[#343232] rounded-lg p-4">
+    <code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">
+        {`key: {}`}
+        </code>
+    </div>
+    </span>,
+    <span>
+    <div className="bg-[#343232] rounded-lg p-4">
+    <code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">
+        {`# parse error`}
+        </code>
+    </div>
+    </span>,
   ],
-  correctAnswer: 1, // Option B is correct
+      correctAnswer: 0, // Option A is correct
   explanation: (
-    <div className="space-y-2">
+    <div className="space-y-2 text-[14px]">
       <p>
-        This YAML defines a <code className="text-orange-400">geoblock_regions</code> array 
-        containing country codes and city codes. Each item represents a region that will be 
-        blocked from accessing the service.
-      </p>
-      <p>
-        The <code className="text-orange-400">-</code> symbols indicate array items, 
-        making this a valid array structure for geoblocking configuration.
+        In YAML, a key with nothing after the colon is interpreted as having a <span className="text-orange-400 font-bold">null value</span>. So <span className="text-orange-400 font-bold">key:</span> is equivalent to <span className="text-orange-400 font-bold">
+          key: null</span> (YAML uses <span className="text-orange-400 font-bold">null</span> for "no value"). 
+          It does <strong>not</strong> become an empty string unless you explicitly provide <span className="text-orange-400 font-bold">""</span>. The YAML 1.1 spec example shows <span className="text-orange-400 font-bold">key:</span> yields a <span className="text-orange-400 font-bold">!!null</span> value.
       </p>
     </div>
   ),

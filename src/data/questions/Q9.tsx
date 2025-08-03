@@ -1,4 +1,3 @@
-import React from 'react';
 import { QuestionData } from '../types';
 
 export const Q9: QuestionData = {
@@ -6,39 +5,58 @@ export const Q9: QuestionData = {
   questionNumber: 9,
   question: (
     <div className="space-y-4">
-      <p>Let's make it more interesting. Below is a YAML configuration for a geoblocking feature.</p>
+      <p>Staying on the same boat,</p>
       <div className="bg-[#343232] rounded-lg p-4">
         <code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">
-          {`geoblock_regions:
-            
-            - us #united states
-            - fr #france
-            - no #norway
-            - sf #san francisco
-            - in #india
-            - uk #united kingdom`}
+{`durations:
+  - 1:10      
+  - 02:40    
+  - 1:        
+  - 0:0`}
         </code>
       </div>
-      <p>What will happen when this configuration is applied?</p>
+      <p>What do you think this will be parsed as?</p>
     </div>
   ),
   options: [
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
+    <span>
+    <div className="bg-[#343232] rounded-lg p-4">
+    <code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">
+        {`[70, "02:40", "1:", "0:0"]`}
+        </code>
+    </div>
+    </span>,
+    <span>
+    <div className="bg-[#343232] rounded-lg p-4">
+    <code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">
+        {`[70, 160, "1:0", 0]`}
+        </code>
+    </div>
+    </span>,
+    <span>
+    <div className="bg-[#343232] rounded-lg p-4">
+    <code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">
+        {`[70, "02:40", "1:", 0]`}
+        </code>
+    </div>
+    </span>,
+    <span>
+    <div className="bg-[#343232] rounded-lg p-4">
+    <code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">
+        {`YAML parse error`}
+        </code>
+    </div>
+    </span>,
   ],
-  correctAnswer: 1, // Option B is correct
+  correctAnswer: 2, // Option A is correct
   explanation: (
-    <div className="space-y-2">
+    <div className="space-y-2 text-[14px]">
       <p>
-        This YAML defines a <code className="text-orange-400">geoblock_regions</code> array 
-        containing country codes and city codes. Each item represents a region that will be 
-        blocked from accessing the service.
-      </p>
-      <p>
-        The <code className="text-orange-400">-</code> symbols indicate array items, 
-        making this a valid array structure for geoblocking configuration.
+        I admit this was very wtf ish. If you got it right, you can pat yourself.
+        <br/>
+        In YAML 1.1, <span className="text-orange-400 font-bold">1:10</span> is parsed as a sexagesimal integer (<span className="text-orange-400 font-bold">1*60 + 10 = 70</span>), <span className="text-orange-400 font-bold">02:40</span> is treated as a 
+        string because the leading zero disqualifies sexagesimal parsing, <span className="text-orange-400 font-bold">1:</span> is a plain scalar string, and <span className="text-orange-400 font-bold">0:0</span> is 
+        parsed as integer <span className="text-orange-400 font-bold">0</span>. 
       </p>
     </div>
   ),

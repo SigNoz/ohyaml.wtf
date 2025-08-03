@@ -4,41 +4,38 @@ import { QuestionData } from '../types';
 export const Q22: QuestionData = {
   id: 22,
   questionNumber: 22,
-  question: (
+    question: (
     <div className="space-y-4">
-      <p>Let's make it more interesting. Below is a YAML configuration for a geoblocking feature.</p>
+      <p>Here's the final one. Check the below YAML file.</p>
       <div className="bg-[#343232] rounded-lg p-4">
         <code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">
-          {`geoblock_regions:
-            
-            - us #united states
-            - fr #france
-            - no #norway
-            - sf #san francisco
-            - in #india
-            - uk #united kingdom`}
+{`serve:
+  - /robots.txt
+  - /favicon.ico
+  - !.git`}
         </code>
       </div>
-      <p>What will happen when this configuration is applied?</p>
+      <p>You run the following Python code:</p>
+      <div className="bg-[#343232] rounded-lg p-4">
+        <code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">
+{`import yaml
+yaml.safe_load(open("unknown-tag.yaml").read())`}
+        </code>
+      </div>
+      <p>What happens when this code is executed?</p>
     </div>
   ),
   options: [
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
+    <span><code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">{`serve: ["/robots.txt", "/favicon.ico", ""]`}</code></span>,
+    <span><code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">{`serve: ["/robots.txt", "/favicon.ico", "git"]`}</code></span>,
+    <span><code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">{`serve: ["/robots.txt", "/favicon.ico"]`}</code></span>,
+    <span>ConstructorError: could not determine a constructor for the tag '!.git'</span>,
   ],
-  correctAnswer: 1, // Option B is correct
+      correctAnswer: 3, // Option D is correct
   explanation: (
-    <div className="space-y-2">
+    <div className="space-y-2 text-[14px]">
       <p>
-        This YAML defines a <code className="text-orange-400">geoblock_regions</code> array 
-        containing country codes and city codes. Each item represents a region that will be 
-        blocked from accessing the service.
-      </p>
-      <p>
-        The <code className="text-orange-400">-</code> symbols indicate array items, 
-        making this a valid array structure for geoblocking configuration.
+        In YAML, <span className="text-orange-400 font-bold">!something</span> denotes a custom tag. PyYAML's <span className="text-orange-400 font-bold">safe_load</span> does not allow unknown tags for security reasons. When it encounters <span className="text-orange-400 font-bold">!.git</span>, it cannot find a constructor for this tag and raises a <span className="text-orange-400 font-bold">ConstructorError</span>, aborting the load.
       </p>
     </div>
   ),

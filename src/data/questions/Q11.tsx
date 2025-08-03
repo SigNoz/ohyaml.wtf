@@ -4,41 +4,38 @@ import { QuestionData } from '../types';
 export const Q11: QuestionData = {
   id: 11,
   questionNumber: 11,
-  question: (
+    question: (
     <div className="space-y-4">
-      <p>Let's make it more interesting. Below is a YAML configuration for a geoblocking feature.</p>
+      You are writing a K8s manifest which is as shown below.
       <div className="bg-[#343232] rounded-lg p-4">
         <code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">
-          {`geoblock_regions:
-            
-            - us #united states
-            - fr #france
-            - no #norway
-            - sf #san francisco
-            - in #india
-            - uk #united kingdom`}
+{`# file: config.yaml
+---
+globals: &g
+  replicas: 2
+  mode: active
+---
+deploy:
+  settings:
+    <<: *g
+    mode: passive`}
         </code>
       </div>
-      <p>What will happen when this configuration is applied?</p>
     </div>
   ),
   options: [
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
+    <span>K8s accepts the second doc; <span className="text-orange-400 font-bold">deploy.settings</span> becomes <span className="text-orange-400 font-bold">{`{ replicas: 2, mode: passive }`}</span></span>,
+    <span>The second document fails to parsebecause <span className="text-orange-400 font-bold">*g</span> cannot reference an anchor from a different document</span>,
+    <span>The parser treats <span className="text-orange-400 font-bold">*g</span> as a plain string <span className="text-orange-400 font-bold">*g</span>; <span className="text-orange-400 font-bold">deploy.settings</span> is <span className="text-orange-400 font-bold">{`{ "<<": "*g", mode: passive }`}</span></span>,
+    <span>Both documents merge automatically; <span className="text-orange-400 font-bold">globals</span> is folded into <span className="text-orange-400 font-bold">deploy.settings</span> and it becomes <span className="text-orange-400 font-bold">{`{ replicas: 2, mode: active }`}</span></span>,
   ],
   correctAnswer: 1, // Option B is correct
   explanation: (
-    <div className="space-y-2">
+    <div className="space-y-2 text-[14px]">
       <p>
-        This YAML defines a <code className="text-orange-400">geoblock_regions</code> array 
-        containing country codes and city codes. Each item represents a region that will be 
-        blocked from accessing the service.
-      </p>
-      <p>
-        The <code className="text-orange-400">-</code> symbols indicate array items, 
-        making this a valid array structure for geoblocking configuration.
+        Soo, <span className="text-orange-400 font-bold">anchors cannot cross --- document boundaries</span> (gotcha!).
+         The alias <span className="text-orange-400 font-bold">*g</span> is undefined in the second doc, 
+         so every YAML 1.1/1.2 parser throws an error before the manifest ever reaches the API server.
       </p>
     </div>
   ),

@@ -4,41 +4,46 @@ import { QuestionData } from '../types';
 export const Q20: QuestionData = {
   id: 20,
   questionNumber: 20,
-  question: (
+    question: (
     <div className="space-y-4">
-      <p>Let's make it more interesting. Below is a YAML configuration for a geoblocking feature.</p>
+      <p>Here's a values.yaml file:</p>
       <div className="bg-[#343232] rounded-lg p-4">
         <code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">
-          {`geoblock_regions:
-            
-            - us #united states
-            - fr #france
-            - no #norway
-            - sf #san francisco
-            - in #india
-            - uk #united kingdom`}
+{`name: ""
+count: 0`}
         </code>
       </div>
-      <p>What will happen when this configuration is applied?</p>
+      <p>and the Helm template:</p>
+      <div className="bg-[#343232] rounded-lg p-4">
+        <code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">
+{`metadata:
+  name: {{ required "name is mandatory" 
+  (default "guest" .Values.name) }}
+
+replicas: {{ default 1 .Values.count }}`}
+        </code>
+      </div>
+      <p>What happens when you run helm template with these values?</p>
     </div>
   ),
   options: [
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
+    <span>Renders name: guest, replicas: 1</span>,
+    <span>Renders name: "", replicas: 1</span>,
+    <span>Error: "name is mandatory" (chart render fails)</span>,
+    <span>Renders name: guest, then fails on replicas (0 treated as empty)</span>,
   ],
-  correctAnswer: 1, // Option B is correct
+      correctAnswer: 2, // Option A is correct
   explanation: (
-    <div className="space-y-2">
+    <div className="space-y-2 text-[14px]">
       <p>
-        This YAML defines a <code className="text-orange-400">geoblock_regions</code> array 
-        containing country codes and city codes. Each item represents a region that will be 
-        blocked from accessing the service.
-      </p>
-      <p>
-        The <code className="text-orange-400">-</code> symbols indicate array items, 
-        making this a valid array structure for geoblocking configuration.
+        The <span className="text-orange-400 font-bold">default</span> function would normally replace an empty 
+        string with <span className="text-orange-400 font-bold">"guest"</span>, but the 
+        <span className="text-orange-400 font-bold"> required</span> function checks whether the 
+        original argument (<span className="text-orange-400 font-bold">.Values.name</span>) is non-empty. 
+        Because <span className="text-orange-400 font-bold">.Values.name</span> is empty, 
+        <span className="text-orange-400 font-bold"> required</span> throws an error before any YAML 
+        is rendered. The replicas field is never evaluated.
+        You can think of it as <span className="text-orange-400 font-bold">required function being more powerful than default</span>.
       </p>
     </div>
   ),

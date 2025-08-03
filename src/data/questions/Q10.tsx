@@ -4,41 +4,59 @@ import { QuestionData } from '../types';
 export const Q10: QuestionData = {
   id: 10,
   questionNumber: 10,
-  question: (
+    question: (
     <div className="space-y-4">
-      <p>Let's make it more interesting. Below is a YAML configuration for a geoblocking feature.</p>
+      <p>A build step loads this file using PyYAML with its default loader (which follows YAML 1.1 rules).</p>
       <div className="bg-[#343232] rounded-lg p-4">
         <code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">
-          {`geoblock_regions:
-            
-            - us #united states
-            - fr #france
-            - no #norway
-            - sf #san francisco
-            - in #india
-            - uk #united kingdom`}
+{`allow_postgres_versions:
+  - 9.5.25
+  - 9.6.24
+  - 10.23
+  - 12.13`}
         </code>
       </div>
-      <p>What will happen when this configuration is applied?</p>
+      <p>What Python object will be produced after parsing?</p>
     </div>
   ),
   options: [
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
-    <span>The pod starts and runs, but the readiness probe never succeeds</span>,
+    <span>
+    <div className="bg-[#343232] rounded-lg p-4">
+    <code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">
+        {`{"allow_postgres_versions": 
+        ["9.5.25", "9.6.24", "10.23", "12.13"]}`}
+        </code>
+    </div>
+    </span>,
+    <span>
+    <div className="bg-[#343232] rounded-lg p-4">
+    <code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">
+        {`{"allow_postgres_versions": 
+        ["9.5.25", "9.6.24", 10.23, 12.13]}`}
+        </code>
+    </div>
+    </span>,
+    <span>
+    <div className="bg-[#343232] rounded-lg p-4">
+    <code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">
+        {`{"allow_postgres_versions": 
+        [9.5.25, 9.6.24, 10.23, 12.13]}`}
+        </code>
+    </div>
+    </span>,
+    <span>
+    <div className="bg-[#343232] rounded-lg p-4">
+    <code className="text-orange-400 font-mono text-sm md:text-base whitespace-pre">
+        {`Parser error — "invalid version literals"`}
+        </code>
+    </div>
+    </span>,
   ],
   correctAnswer: 1, // Option B is correct
   explanation: (
-    <div className="space-y-2">
+    <div className="space-y-2 text-[14px]">
       <p>
-        This YAML defines a <code className="text-orange-400">geoblock_regions</code> array 
-        containing country codes and city codes. Each item represents a region that will be 
-        blocked from accessing the service.
-      </p>
-      <p>
-        The <code className="text-orange-400">-</code> symbols indicate array items, 
-        making this a valid array structure for geoblocking configuration.
+        With YAML 1.1, unquoted scalars containing a single dot are <span className="text-orange-400 font-bold">parsed as floats</span> and is valid (<span className="text-orange-400 font-bold">10.23</span>, <span className="text-orange-400 font-bold">12.13</span>), while those with two dots (e.g., <span className="text-orange-400 font-bold">9.5.25</span>, <span className="text-orange-400 font-bold">9.6.24</span>) are <span className="text-orange-400 font-bold">invalid as numbers</span> and remain plain strings. Thus, the resulting Python object has the first two values as strings and the last two as floats.
       </p>
     </div>
   ),
