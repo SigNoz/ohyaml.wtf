@@ -106,7 +106,7 @@ function ScorePage({ score, totalQuestions, onRestart }: ScorePageProps) {
                 whileTap={{ scale: 0.95 }}
                 className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
                 onClick={() => {
-                  const text = `I scored ${score}/${totalQuestions} on the YAML quiz! 🎯`;
+                      const text = `Although there were a LOT of gotchas, I scored ${score}/${totalQuestions}. Try https://www.ohyaml.wtf/ now! 🎯`;
                   const url = window.location.href;
                   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
                   window.open(twitterUrl, '_blank');
@@ -119,7 +119,7 @@ function ScorePage({ score, totalQuestions, onRestart }: ScorePageProps) {
                 whileTap={{ scale: 0.95 }}
                 className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
                 onClick={() => {
-                  const text = `I scored ${score}/${totalQuestions} on the YAML quiz! 🎯`;
+                  const text = `Although there were a LOT of gotchas, I scored ${score}/${totalQuestions}. Try https://www.ohyaml.wtf/ now! 🎯`;
                   const url = window.location.href;
                   const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&title=${encodeURIComponent(text)}`;
                   window.open(linkedinUrl, '_blank');
@@ -132,7 +132,7 @@ function ScorePage({ score, totalQuestions, onRestart }: ScorePageProps) {
                 whileTap={{ scale: 0.95 }}
                 className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
                 onClick={() => {
-                  const text = `I scored ${score}/${totalQuestions} on the YAML quiz! 🎯`;
+                  const text = `Although there were a lot of gotchas, I scored ${score}/${totalQuestions}. Try https://www.ohyaml.wtf/ now! 🎯`;
                   const url = window.location.href;
                   navigator.clipboard.writeText(`${text}\n${url}`);
                 }}
