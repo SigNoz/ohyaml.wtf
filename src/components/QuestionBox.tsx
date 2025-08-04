@@ -6,6 +6,7 @@ import QuestionContent from './QuestionContent';
 import AnswerOption from './AnswerOption';
 import Explanation from './Explanation';
 import NextButton from './NextButton';
+import Footer from './Footer';
 
 interface QuestionBoxProps {
   questionNumber: number;
@@ -105,6 +106,11 @@ function QuestionBox({
           />
         </div>
       </motion.div>
+      
+      {/* Footer */}
+      <div className="mt-8 ">
+        <Footer delay={0.3} />
+      </div>
     </div>
   );
 }

@@ -12,7 +12,7 @@ export const Q1: QuestionData = {
           confirm: yes
         </code>
       </div>
-      <p>What do you think the following YAML will be parsed out as?</p>
+      <p>What do you think the above YAML will be parsed out as?</p>
     </div>
   ),
   options: [

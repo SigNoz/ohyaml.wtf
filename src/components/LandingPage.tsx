@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Button from './Button';
+import Footer from './Footer';
 
 interface LandingPageProps {
   onStartQuiz: () => void;
@@ -68,14 +69,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartQuiz }) => {
       </div>
 
       {/* Footer - Bottom of page, centered */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.9 }}
-        className="text-xs sm:text-[14px] font-quicksand text-white/80 font-medium text-center px-2"
-      >
-        created by <span className="text-white font-medium">Elizabeth Mathew</span>. inspired by <a href="https://fstrings.wtf" target="_blank" rel="noopener noreferrer" className="text-white hover:underline transition-all duration-200">fstrings.wtf</a>. read <span className="text-white font-medium">origin story</span> here
-      </motion.div>
+      <Footer />
     </div>
   );
 };
