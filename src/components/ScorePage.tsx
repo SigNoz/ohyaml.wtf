@@ -67,7 +67,7 @@ function ScorePage({ score, totalQuestions, onRestart, isRetake = false }: Score
           />
 
           {/* Contest Eligibility Section - Only show if not a retake */}
-          {score > 1 && !isRetake && (
+          {score > 10 && !isRetake && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
