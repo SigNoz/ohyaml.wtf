@@ -10,9 +10,10 @@ interface ScorePageProps {
   score: number;
   totalQuestions: number;
   onRestart: () => void;
+  isRetake?: boolean;
 }
 
-function ScorePage({ score, totalQuestions, onRestart }: ScorePageProps) {
+function ScorePage({ score, totalQuestions, onRestart, isRetake = false }: ScorePageProps) {
   const percentage = Math.round((score / totalQuestions) * 100);
   const [showContestPopup, setShowContestPopup] = useState(false);
   
@@ -46,12 +47,12 @@ function ScorePage({ score, totalQuestions, onRestart }: ScorePageProps) {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-center mb-8"
+            className="text-center mb-2"
           >
             <div className="text-accent text-4xl md:text-5xl lg:text-6xl font-playwright font-bold mb-4">
               {score}/{totalQuestions}
             </div>
-            <div className="text-accent text-lg md:text-xl font-bold font-quicksand mb-4">
+            <div className="text-accent text-lg md:text-xl font-bold font-quicksand">
               {percentage}% correct
             </div>
        
@@ -62,11 +63,11 @@ function ScorePage({ score, totalQuestions, onRestart }: ScorePageProps) {
             initial={{ opacity: 0, scaleX: 0 }}
             animate={{ opacity: 1, scaleX: 1 }}
             transition={{ duration: 0.5, delay: 0.6 }}
-            className="border-t border-white/30 mb-6"
+            className="border-t border-white/30 mb-2"
           />
 
-          {/* Contest Eligibility Section */}
-          {score > 2 && (
+          {/* Contest Eligibility Section - Only show if not a retake */}
+          {score > 1 && !isRetake && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -74,29 +75,29 @@ function ScorePage({ score, totalQuestions, onRestart }: ScorePageProps) {
               className="text-center mb-6"
             >
               <div className="bg-accent rounded-lg p-4">
-                <p className="text-white font-playwright text-base font-medium mb-2">
-                🎁 Congratulations! 🎁
+                <p className="text-white font-playwright text-base font-bold mb-4">
+                🎁 You're eligible for swags! 🎁
                 </p>
-                                 <p className="text-white font-quicksand text-sm">
-                   You are eligible for swags.
-                   <button 
-                     onClick={() => setShowContestPopup(true)}
-                     className="text-white underline cursor-pointer font-medium bg-accent px-2 py-1 rounded hover:bg-accent/80 transition-colors"
-                   >
-                    Enter contest now.
-                   </button>
-                 </p>
+                  <p className="text-white font-quicksand text-sm">
+                  With a score that high, you're eligible for some sweet SigNoz swag! Share it on X or LinkedIn and tag us. If you're in the top 5 by Aug 30th, we'll send you a
+                  free t-shirt and sticker pack.{"  "}
+                  <span className="text-white font-bold font-quicksand text-sm cursor-pointer underline" onClick={() => setShowContestPopup(true)}>
+                Read more.
+                  </span>
+                  </p>
+              
               </div>
             </motion.div>
           )}
 
-          {/* Share Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.8 }}
-            className="text-center mb-8"
-          >
+          {/* Share Section - Only show if not a retake */}
+          {!isRetake && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.8 }}
+              className="text-center mb-8"
+            >
             <p className="text-accent font-quicksand text-base mb-4 font-bold">
               Share with your pals!
             </p>
@@ -106,7 +107,7 @@ function ScorePage({ score, totalQuestions, onRestart }: ScorePageProps) {
                 whileTap={{ scale: 0.95 }}
                 className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
                 onClick={() => {
-                      const text = `Although there were a LOT of gotchas, I scored ${score}/${totalQuestions}. Try https://www.ohyaml.wtf/ now! 🎯`;
+                      const text = `Although there were a LOT of gotchas, I scored ${score}/${totalQuestions}. Try https://www.ohyaml.wtf/ by @SigNozHQ! 🎯`;
                   const url = window.location.href;
                   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
                   window.open(twitterUrl, '_blank');
@@ -119,7 +120,7 @@ function ScorePage({ score, totalQuestions, onRestart }: ScorePageProps) {
                 whileTap={{ scale: 0.95 }}
                 className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
                 onClick={() => {
-                  const text = `Although there were a LOT of gotchas, I scored ${score}/${totalQuestions}. Try https://www.ohyaml.wtf/ now! 🎯`;
+                  const text = `Although there were a LOT of gotchas, I scored ${score}/${totalQuestions}. Try https://www.ohyaml.wtf/ by SigNoz now! 🎯`;
                   const url = window.location.href;
                   const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&title=${encodeURIComponent(text)}`;
                   window.open(linkedinUrl, '_blank');
@@ -141,6 +142,7 @@ function ScorePage({ score, totalQuestions, onRestart }: ScorePageProps) {
               </motion.button>
             </div>
           </motion.div>
+          )}
 
                   {/* Restart Button */}
         <motion.div
@@ -149,13 +151,12 @@ function ScorePage({ score, totalQuestions, onRestart }: ScorePageProps) {
           transition={{ duration: 0.5, delay: 1.0 }}
           className="text-center"
         >
-          <Button
+          <button
             onClick={onRestart}
-            size="md"
-            className="text-base sm:text-lg"
+            className="text-accent font-bold hover:text-accent/60 underline cursor-pointer font-quicksand text-[16px] transition-colors"
           >
             Take Quiz Again
-          </Button>
+          </button>
         </motion.div>
         </motion.div>
       </div>
@@ -183,12 +184,21 @@ function ScorePage({ score, totalQuestions, onRestart }: ScorePageProps) {
               <h3 className="text-xl md:text-2xl font-playwright font-bold text-background mb-4">
                 🎁 Contest Details 🎁
               </h3>
-              <p className="text-white font-quicksand text-sm md:text-base leading-relaxed mb-6">
-                                 To get cool <a href="https://signoz.io" target="_blank" rel="noopener noreferrer" className="text-white underline transition-all duration-200 font-bold">SigNoz</a> swags*, share this with your network on LinkedIn or Twitter. We will be reaching out to the top 5 scorers, who spread the word around!
-              </p>
-              <p className="text-white/80 font-quicksand text-xs md:text-sm mb-6">
-                *swags = a cool tshirt and an awesome sticker pack :)
-              </p>
+              <div className="text-white font-quicksand text-[14px] leading-relaxed mb-6">
+              1.  Flaunt your score on X (Twitter) or LinkedIn.                 
+              <br />
+              <br />
+              2.  Tag our official account, <span className="text-white font-bold">@SigNozHQ</span> on X and <span className="text-white font-bold">SigNoz</span> on LinkedIn. This is how we'll find you!                                                            
+              <br />
+              <br />
+              3. Alternatively, you can directly share from the social icons below.
+              <br />
+              <br />
+              4. Share your most WTF, face-palm story about YAML or DevOps. Think "accidentally deleted the prod database" level of chaos. 😱
+              <br />
+              <br />
+              5.  The top <span className="text-white font-bold">5 scorers by Aug 30th win </span> and in case of a tie, we will choose the story that made us <span className="text-white font-bold">go max WTF</span>.
+              </div>
               <Button
                 onClick={() => setShowContestPopup(false)}
                 size="md"
