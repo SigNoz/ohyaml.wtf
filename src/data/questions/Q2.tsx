@@ -37,7 +37,7 @@ export const Q2: QuestionData = {
       apply the spec we revised in the previous question, <span className="text-orange-400 font-medium">no</span> is interpreted as a boolean <span className="text-orange-400 font-medium">false</span>.
       At runtime, your application’s deserialization layer expects a string, encounters a boolean, throws a type‑mismatch error, and crashes, triggering a CrashLoopBackOff.
       <br />
-      The problem is so common that it's famously identified as the <span className="text-orange-400 font-medium" style={{textDecoration: 'underline'}}>Norway problem</span>.
+      The problem is so common that it's famously identified as the <a href="https://news.ycombinator.com/item?id=43668290" className="text-orange-400 font-bold" style={{textDecoration: 'underline'}} target="_blank" rel="noopener noreferrer">Norway problem</a>.
     </div>
   ),
 }; 

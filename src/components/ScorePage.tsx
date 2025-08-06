@@ -58,11 +58,43 @@ function ScorePage({ score, totalQuestions, onRestart, isRetake = false }: Score
        
           </motion.div>
 
+          {/* Fun Reads on YAML Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+            className="text-center mb-2"
+          >
+            <div className="bg-white/10 rounded-lg p-4">
+              <p className="text-accent font-playwright text-base font-bold mb-3">
+                📚 Fun reads on yaml for you! 📚
+              </p>
+              <div className="space-y-2">
+                <a 
+                  href="https://ruudvanasseldonk.com/2023/01/11/the-yaml-document-from-hell" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block text-white font-bold font-quicksand text-sm hover:text-accent transition-colors underline"
+                >
+                   YAML document from hell
+                </a>
+                <a 
+                  href="https://noyaml.com/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block text-white font-bold font-quicksand text-sm hover:text-accent transition-colors underline"
+                >
+                   noyaml.com
+                </a>
+              </div>
+            </div>
+          </motion.div>
+
           {/* Divider */}
           <motion.div
             initial={{ opacity: 0, scaleX: 0 }}
             animate={{ opacity: 1, scaleX: 1 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
+            transition={{ duration: 0.5, delay: 0.7 }}
             className="border-t border-white/30 mb-2"
           />
 
@@ -71,7 +103,7 @@ function ScorePage({ score, totalQuestions, onRestart, isRetake = false }: Score
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.7 }}
+              transition={{ duration: 0.5, delay: 0.8 }}
               className="text-center mb-6"
             >
               <div className="bg-accent rounded-lg p-4">
@@ -81,9 +113,6 @@ function ScorePage({ score, totalQuestions, onRestart, isRetake = false }: Score
                   <p className="text-white font-quicksand text-sm">
                   With a score that high, you're eligible for some sweet SigNoz swag! Share it on X or LinkedIn and tag us. If you're in the top 5 by Aug 30th, we'll send you a
                   free t-shirt and sticker pack.{"  "}
-                  <span className="text-white font-bold font-quicksand text-sm cursor-pointer underline" onClick={() => setShowContestPopup(true)}>
-                Read more.
-                  </span>
                   </p>
               
               </div>
@@ -95,7 +124,7 @@ function ScorePage({ score, totalQuestions, onRestart, isRetake = false }: Score
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.8 }}
+              transition={{ duration: 0.5, delay: 0.9 }}
               className="text-center mb-8"
             >
             <p className="text-accent font-quicksand text-base mb-4 font-bold">
@@ -148,7 +177,7 @@ function ScorePage({ score, totalQuestions, onRestart, isRetake = false }: Score
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 1.0 }}
+          transition={{ duration: 0.5, delay: 1.1 }}
           className="text-center"
         >
           <button
@@ -164,52 +193,6 @@ function ScorePage({ score, totalQuestions, onRestart, isRetake = false }: Score
       {/* Footer - At the bottom */}
       <Footer delay={1.2} />
 
-      {/* Contest Popup */}
-      {showContestPopup && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
-          onClick={() => setShowContestPopup(false)}
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            className="bg-accent border-2 border-white rounded-2xl p-6 md:p-8 max-w-md w-full shadow-xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="text-center">
-              <h3 className="text-xl md:text-2xl font-playwright font-bold text-background mb-4">
-                🎁 Contest Details 🎁
-              </h3>
-              <div className="text-white font-quicksand text-[14px] leading-relaxed mb-6">
-              1.  Flaunt your score on X (Twitter) or LinkedIn.                 
-              <br />
-              <br />
-              2.  Tag our official account, <span className="text-white font-bold">@SigNozHQ</span> on X and <span className="text-white font-bold">SigNoz</span> on LinkedIn. This is how we'll find you!                                                            
-              <br />
-              <br />
-              3. Alternatively, you can directly share from the social icons below.
-              <br />
-              <br />
-              4. Share your most WTF, face-palm story about YAML or DevOps. Think "accidentally deleted the prod database" level of chaos. 😱
-              <br />
-              <br />
-              5.  The top <span className="text-white font-bold">5 scorers by Aug 30th win </span> and in case of a tie, we will choose the story that made us <span className="text-white font-bold">go max WTF</span>.
-              </div>
-              <Button
-                onClick={() => setShowContestPopup(false)}
-                size="md"
-                className="text-sm md:text-base bg-background text-accent font-bold hover:bg-background/80"
-              >
-                Got it!
-              </Button>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
     </div>
   );
 }
