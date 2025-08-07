@@ -5,6 +5,8 @@ import { RiLink } from 'react-icons/ri';
 import Button from './Button';
 import Footer from './Footer';
 import { useState } from 'react';
+import TrackingLink from './TrackingLink';
+import TrackingButton from './TrackingButton';
 
 interface ScorePageProps {
   score: number;
@@ -70,22 +72,32 @@ function ScorePage({ score, totalQuestions, onRestart, isRetake = false }: Score
                 📚 Fun reads on yaml for you! 📚
               </p>
               <div className="space-y-2">
-                <a 
+                <TrackingLink 
                   href="https://ruudvanasseldonk.com/2023/01/11/the-yaml-document-from-hell" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="block text-white font-bold font-quicksand text-sm hover:text-accent transition-colors underline"
+                  clickType="link"
+                  clickName="yaml_document_from_hell"
+                  clickLocation="score_page"
+                  clickText="YAML document from hell"
+                  pathname="/score"
                 >
                    YAML document from hell
-                </a>
-                <a 
+                </TrackingLink>
+                <TrackingLink 
                   href="https://noyaml.com/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="block text-white font-bold font-quicksand text-sm hover:text-accent transition-colors underline"
+                  clickType="link"
+                  clickName="noyaml_com"
+                  clickLocation="score_page"
+                  clickText="noyaml.com"
+                  pathname="/score"
                 >
                    noyaml.com
-                </a>
+                </TrackingLink>
               </div>
             </div>
           </motion.div>
@@ -131,44 +143,68 @@ function ScorePage({ score, totalQuestions, onRestart, isRetake = false }: Score
               Share with your pals!
             </p>
             <div className="flex justify-center space-x-4">
-              <motion.button
+              <motion.div
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
-                onClick={() => {
-                      const text = `Although there were a LOT of gotchas, I scored ${score}/${totalQuestions}. Try https://www.ohyaml.wtf/ by @SigNozHQ! 🎯`;
-                  const url = window.location.href;
-                  const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
-                  window.open(twitterUrl, '_blank');
-                }}
               >
-                {FaXTwitter({ size: 28, className: "text-white" })}
-              </motion.button>
-              <motion.button
+                <TrackingButton
+                  className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
+                  clickType="button"
+                  clickName="share_twitter"
+                  clickLocation="score_page"
+                  clickText="Share on Twitter"
+                  pathname="/score"
+                  onClick={() => {
+                    const text = `Although there were a LOT of gotchas, I scored ${score}/${totalQuestions}. Try https://www.ohyaml.wtf/ by @SigNozHQ! 🎯`;
+                    const url = window.location.href;
+                    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+                    window.open(twitterUrl, '_blank');
+                  }}
+                >
+                  {FaXTwitter({ size: 28, className: "text-white" })}
+                </TrackingButton>
+              </motion.div>
+              <motion.div
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
-                onClick={() => {
-                  const text = `Although there were a LOT of gotchas, I scored ${score}/${totalQuestions}. Try https://www.ohyaml.wtf/ by SigNoz now! 🎯`;
-                  const url = window.location.href;
-                  const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&title=${encodeURIComponent(text)}`;
-                  window.open(linkedinUrl, '_blank');
-                }}
               >
-                {FaLinkedin({ size: 28, className: "text-white" })}
-              </motion.button>
-              <motion.button
+                <TrackingButton
+                  className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
+                  clickType="button"
+                  clickName="share_linkedin"
+                  clickLocation="score_page"
+                  clickText="Share on LinkedIn"
+                  pathname="/score"
+                  onClick={() => {
+                    const text = `Although there were a LOT of gotchas, I scored ${score}/${totalQuestions}. Try https://www.ohyaml.wtf/ by SigNoz now! 🎯`;
+                    const url = window.location.href;
+                    const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&title=${encodeURIComponent(text)}`;
+                    window.open(linkedinUrl, '_blank');
+                  }}
+                >
+                  {FaLinkedin({ size: 28, className: "text-white" })}
+                </TrackingButton>
+              </motion.div>
+              <motion.div
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
-                onClick={() => {
-                  const text = `Although there were a lot of gotchas, I scored ${score}/${totalQuestions}. Try https://www.ohyaml.wtf/ now! 🎯`;
-                  const url = window.location.href;
-                  navigator.clipboard.writeText(`${text}\n${url}`);
-                }}
               >
-                {RiLink({ size: 28, className: "text-white" })}
-              </motion.button>
+                <TrackingButton
+                  className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
+                  clickType="button"
+                  clickName="share_copy_link"
+                  clickLocation="score_page"
+                  clickText="Copy Link"
+                  pathname="/score"
+                  onClick={() => {
+                    const text = `Although there were a lot of gotchas, I scored ${score}/${totalQuestions}. Try https://www.ohyaml.wtf/ now! 🎯`;
+                    const url = window.location.href;
+                    navigator.clipboard.writeText(`${text}\n${url}`);
+                  }}
+                >
+                  {RiLink({ size: 28, className: "text-white" })}
+                </TrackingButton>
+              </motion.div>
             </div>
           </motion.div>
           )}
@@ -180,12 +216,17 @@ function ScorePage({ score, totalQuestions, onRestart, isRetake = false }: Score
           transition={{ duration: 0.5, delay: 1.1 }}
           className="text-center"
         >
-          <button
+          <TrackingButton
             onClick={onRestart}
             className="text-accent font-bold hover:text-accent/60 underline cursor-pointer font-quicksand text-[16px] transition-colors"
+            clickType="button"
+            clickName="restart_quiz"
+            clickLocation="score_page"
+            clickText="Take Quiz Again"
+            pathname="/score"
           >
             Take Quiz Again
-          </button>
+          </TrackingButton>
         </motion.div>
         </motion.div>
       </div>
