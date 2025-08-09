@@ -23,12 +23,13 @@ export const Q19: QuestionData = {
     <span>Renders name: null</span>,
     <span>Template rendering fails with error: "Name is required!"</span>,
   ],
-      correctAnswer: 1, // Option A is correct
+      correctAnswer: 3, // Option D is correct
   explanation: (
     <div className="space-y-2 text-[14px]">
       <p>
-        The <span className="text-orange-400 font-bold">required function stops rendering and throws the 
-        given error </span> if the value is missing or empty. It does not insert the message as a value or produce YAML.
+      The Helm <span className="text-orange-400 font-bold">required</span> function is a strict validator. 
+      If <span className="text-orange-400 font-bold">.Values.name</span> is missing or empty, the function's only job is to halt template rendering and display the provided
+      error message. 
       </p>
     </div>
   ),
