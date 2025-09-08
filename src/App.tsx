@@ -2,20 +2,14 @@ import { useState, useEffect } from 'react';
 import LandingPage from './components/LandingPage';
 import QuestionBox from './components/QuestionBox';
 import ScorePage from './components/ScorePage';
-import PageViewTracker from './components/PageViewTracker';
 import { questions } from './data/questions';
 import { QuestionData } from './data/types';
 import { 
   QuizStatus, 
-  QuizState as StorageQuizState,
   saveQuizState, 
   loadQuizState, 
-  clearQuizState,
-  isQuizOngoing,
-  isQuizCompleted,
   isQuizRetake
 } from './utils/quizStorage';
-import { useLogEvent } from './hooks/useLogEvent';
 
 interface QuizState {
   isStarted: boolean;
@@ -27,7 +21,6 @@ interface QuizState {
 }
 
 function App() {
-  const logEvent = useLogEvent();
   const [quizState, setQuizState] = useState<QuizState>({
     isStarted: false,
     currentQuestionIndex: 0,
@@ -80,16 +73,6 @@ function App() {
     // Check if this is a retake or first attempt
     const isRetake = isQuizRetake();
     
-    // Log quiz start event
-    logEvent({
-      eventName: 'Quiz Started',
-      eventType: 'track',
-      attributes: {
-        isRetake: isRetake,
-        totalQuestions: questions.length,
-      },
-    });
-    
     // Save initial quiz state to localStorage
     if (isRetake) {
       saveQuizState({
@@ -115,20 +98,6 @@ function App() {
   const handleAnswer = (selectedAnswer: number, isCorrect: boolean) => {
     const newScore = isCorrect ? quizState.score + 1 : quizState.score;
     const isFirstCompletion = !isQuizRetake();
-    const currentQuestion = getCurrentQuestion();
-    
-    // Log answer event
-    logEvent({
-      eventName: 'Question Answered',
-      eventType: 'track',
-      attributes: {
-        questionNumber: quizState.currentQuestionIndex + 1,
-        isCorrect: isCorrect,
-        selectedAnswer: selectedAnswer,
-        correctAnswer: currentQuestion.correctAnswer,
-        isRetake: !isFirstCompletion,
-      },
-    });
     
     // Save updated state to localStorage
     saveQuizState({
@@ -149,18 +118,6 @@ function App() {
     // on quiz completion
     if (nextQuestionIndex >= questions.length) {
       // Quiz completed - determine if this is first completion or retake
-      
-      // Log quiz completion event
-      logEvent({
-        eventName: 'Quiz Completed',
-        eventType: 'track',
-        attributes: {
-          score: quizState.score,
-          totalQuestions: questions.length,
-          scorePercentage: Math.round((quizState.score / questions.length) * 100),
-          isRetake: !isFirstCompletion,
-        },
-      });
       
       // Save completion state to localStorage
       saveQuizState({
@@ -191,16 +148,6 @@ function App() {
   };
 
   const handleRestart = () => {
-    // Log quiz restart event
-    logEvent({
-      eventName: 'Quiz Restarted',
-      eventType: 'track',
-      attributes: {
-        previousScore: quizState.score,
-        totalQuestions: questions.length,
-      },
-    });
-    
     // Update localStorage status to RETAKE when restarting
     saveQuizState({
       status: QuizStatus.RETAKE,
@@ -222,19 +169,8 @@ function App() {
     return questions[quizState.currentQuestionIndex];
   };
 
-  const getPagePath = () => {
-    if (!quizState.isStarted && !quizState.isFinished) {
-      return '/';
-    } else if (quizState.isFinished) {
-      return '/score';
-    } else {
-      return `/question/${quizState.currentQuestionIndex + 1}`;
-    }
-  };
-
   return (
     <div className="App">
-      <PageViewTracker pathname={getPagePath()} />
       {(!quizState.isStarted && !quizState.isFinished) ? (
         <LandingPage onStartQuiz={handleStartQuiz} />
       ) : quizState.isFinished ? (

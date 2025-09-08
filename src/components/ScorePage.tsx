@@ -2,11 +2,7 @@ import { motion } from 'framer-motion';
 import { FaXTwitter } from 'react-icons/fa6';
 import { FaLinkedin } from 'react-icons/fa6';
 import { RiLink } from 'react-icons/ri';
-import Button from './Button';
 import Footer from './Footer';
-import { useState } from 'react';
-import TrackingLink from './TrackingLink';
-import TrackingButton from './TrackingButton';
 
 interface ScorePageProps {
   score: number;
@@ -17,7 +13,6 @@ interface ScorePageProps {
 
 function ScorePage({ score, totalQuestions, onRestart, isRetake = false }: ScorePageProps) {
   const percentage = Math.round((score / totalQuestions) * 100);
-  const [showContestPopup, setShowContestPopup] = useState(false);
   
   return (
     <div className="min-h-screen bg-background flex flex-col px-4 py-8 ">
@@ -72,32 +67,22 @@ function ScorePage({ score, totalQuestions, onRestart, isRetake = false }: Score
                 📚 Fun reads on yaml for you! 📚
               </p>
               <div className="space-y-2">
-                <TrackingLink 
+                <a 
                   href="https://ruudvanasseldonk.com/2023/01/11/the-yaml-document-from-hell" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="block text-white font-bold font-quicksand text-sm hover:text-accent transition-colors underline"
-                  clickType="link"
-                  clickName="yaml_document_from_hell"
-                  clickLocation="score_page"
-                  clickText="YAML document from hell"
-                  pathname="/score"
                 >
                    YAML document from hell
-                </TrackingLink>
-                <TrackingLink 
+                </a>
+                <a 
                   href="https://noyaml.com/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="block text-white font-bold font-quicksand text-sm hover:text-accent transition-colors underline"
-                  clickType="link"
-                  clickName="noyaml_com"
-                  clickLocation="score_page"
-                  clickText="noyaml.com"
-                  pathname="/score"
                 >
                    noyaml.com
-                </TrackingLink>
+                </a>
               </div>
             </div>
           </motion.div>
@@ -147,13 +132,8 @@ function ScorePage({ score, totalQuestions, onRestart, isRetake = false }: Score
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <TrackingButton
+                <button
                   className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
-                  clickType="button"
-                  clickName="share_twitter"
-                  clickLocation="score_page"
-                  clickText="Share on Twitter"
-                  pathname="/score"
                   onClick={() => {
                     const text = `Although there were a LOT of gotchas, I scored ${score}/${totalQuestions}. Try https://www.ohyaml.wtf/ by @SigNozHQ! 🎯`;
                     const url = window.location.href;
@@ -162,19 +142,14 @@ function ScorePage({ score, totalQuestions, onRestart, isRetake = false }: Score
                   }}
                 >
                   {FaXTwitter({ size: 28, className: "text-white" })}
-                </TrackingButton>
+                </button>
               </motion.div>
               <motion.div
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <TrackingButton
+                <button
                   className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
-                  clickType="button"
-                  clickName="share_linkedin"
-                  clickLocation="score_page"
-                  clickText="Share on LinkedIn"
-                  pathname="/score"
                   onClick={() => {
                     const text = `Although there were a LOT of gotchas, I scored ${score}/${totalQuestions}. Try https://www.ohyaml.wtf/ by SigNoz now! 🎯`;
                     const url = window.location.href;
@@ -183,19 +158,14 @@ function ScorePage({ score, totalQuestions, onRestart, isRetake = false }: Score
                   }}
                 >
                   {FaLinkedin({ size: 28, className: "text-white" })}
-                </TrackingButton>
+                </button>
               </motion.div>
               <motion.div
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <TrackingButton
+                <button
                   className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
-                  clickType="button"
-                  clickName="share_copy_link"
-                  clickLocation="score_page"
-                  clickText="Copy Link"
-                  pathname="/score"
                   onClick={() => {
                     const text = `Although there were a lot of gotchas, I scored ${score}/${totalQuestions}. Try https://www.ohyaml.wtf/ now! 🎯`;
                     const url = window.location.href;
@@ -203,7 +173,7 @@ function ScorePage({ score, totalQuestions, onRestart, isRetake = false }: Score
                   }}
                 >
                   {RiLink({ size: 28, className: "text-white" })}
-                </TrackingButton>
+                </button>
               </motion.div>
             </div>
           </motion.div>
@@ -216,17 +186,12 @@ function ScorePage({ score, totalQuestions, onRestart, isRetake = false }: Score
           transition={{ duration: 0.5, delay: 1.1 }}
           className="text-center"
         >
-          <TrackingButton
+          <button
             onClick={onRestart}
             className="text-accent font-bold hover:text-accent/60 underline cursor-pointer font-quicksand text-[16px] transition-colors"
-            clickType="button"
-            clickName="restart_quiz"
-            clickLocation="score_page"
-            clickText="Take Quiz Again"
-            pathname="/score"
           >
             Take Quiz Again
-          </TrackingButton>
+          </button>
         </motion.div>
         </motion.div>
       </div>
